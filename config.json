@@ -1,0 +1,9 @@
+{
+    "user": "ZUVIO帳號",
+    "password": "ZUVIO密碼",
+    "lat": 24.122438,
+    "lng": 120.650394,
+    "waitSec": 3,
+    "Fullmode": 0,
+    "music": "alarm.mp3"
+}
