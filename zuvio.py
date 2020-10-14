@@ -36,7 +36,17 @@ def PlayMusic(path):
             except KeyboardInterrupt:
                 logging.warning("Ctrl+C detected")
                 return
-                
+def lineNotify(token, msg):
+    url = "https://notify-api.line.me/api/notify"
+    headers = {
+        "Authorization": "Bearer " + token, 
+        "Content-Type" : "application/x-www-form-urlencoded"
+    }
+    
+    payload = {'message': msg}
+    r = requests.post(url, headers = headers, params = payload)
+    return r.status_code
+
 class zuvio:
     def __init__(self, user_mail, password, Fullmode, **kwargs):
         self.main_session = requests.session()
@@ -251,5 +261,11 @@ if __name__ == "__main__":
     }
     
     zuvio_user.rollcall_run_forever(check_sleep_sec=Myconfig["waitSec"])
-    logging.info("[alarm] Playing...")
-    PlayMusic(Myconfig["music"])
+    
+    if(Myconfig["linyNotifyOn"]):
+        logging.info("[Line] notifying...")
+        lineNotify(Myconfig["lineNotifyToken"], "課程點名中")
+
+    if(Myconfig["musicOn"]):
+        logging.info("[alarm] Playing...")
+        PlayMusic(Myconfig["music"])
