@@ -237,7 +237,7 @@ class zuvio:
                     if rollcall_status['rollcall_status_msg'] != False:
                         if self.rollcall(rollcall_id=rollcall_status['rollcall_id']):
                             logging.info(msg='[OK] success rollcall. => ' + course['course_name'])
-                            return True
+                            return course['course_name']
             time.sleep(check_sleep_sec)
 
 
@@ -260,11 +260,11 @@ if __name__ == "__main__":
         'lng': Myconfig["lng"]
     }
     
-    zuvio_user.rollcall_run_forever(check_sleep_sec=Myconfig["waitSec"])
+    courseName = zuvio_user.rollcall_run_forever(check_sleep_sec=Myconfig["waitSec"])
     
     if(Myconfig["linyNotifyOn"]):
         logging.info("[Line] notifying...")
-        lineNotify(Myconfig["lineNotifyToken"], "課程點名中")
+        lineNotify(Myconfig["lineNotifyToken"], "{0} zuvio 點名中!!!".format(courseName))
 
     if(Myconfig["musicOn"]):
         logging.info("[alarm] Playing...")

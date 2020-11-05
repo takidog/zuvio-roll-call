@@ -1,13 +1,13 @@
 {
-    "user": "ZUVIO帳號",
-    "password": "ZUVIO密碼",
+    "user": "user",
+    "password": "password",
 
     "//_comment": "DO NOT edit below content if you aren't developer",
-    "lineNotifyToken": "YOUR TOKEN",
+    "lineNotifyToken": "token",
     "lat": 24.122438,
     "lng": 120.650394,
     "waitSec": 10,
-    "Fullmode": 0,
+    "Fullmode": 1,
     "music": "alarm.mp3",
     "musicOn": 1,
     "linyNotifyOn":1
