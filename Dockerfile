@@ -7,7 +7,7 @@ RUN pip install --user -r /requirements.txt
 COPY zuvio.py /app
 COPY config.json /app
 
-ENV USER=user,
+ENV USER=user
 ENV PASSWD=password
 ENV LINE_NOTIFY_TOKEN=lineNotifyToken
 ENV LAT=24.122438
