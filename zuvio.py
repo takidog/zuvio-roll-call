@@ -1,12 +1,9 @@
-import datetime
 import logging
 import re
-import threading
 import time
 from typing import List
-import pygame
 import requests
-import json
+import os
 from lxml import etree
 #from config import Myconfig
 
@@ -19,23 +16,19 @@ import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 
 def LoadConfig():
-    with open("config.json", "r", encoding="utf-8") as f:
-        con = f.read()
-        Myconfig = json.loads(con)
-        return Myconfig
+    return {
+    "user": os.environ["USER"],
+    "password": os.environ["PASSWD"],
+    "lineNotifyToken": os.environ["LINE_NOTIFY_TOKEN"],
+    "lat": os.environ["LAT"],#24.122438,
+    "lng": os.environ["LNG"],#120.650394,
+    "waitSec": int(os.environ["WAITSEC"]),
+    "Fullmode": bool(os.environ["FULLMODE"]),
+    "linyNotifyOn":bool(os.environ["LINE_NOTIFY_ON"]),
+    "loop":bool(os.environ["LOOP_ON"]),
+    "waitSecAfterSuccess":int(os.environ["WAIT_SEC_AFTER_CALL"])
+}
 
-def PlayMusic(path):
-    pygame.mixer.init()
-    pygame.mixer.music.set_volume(1.0)
-
-    while True:
-        if not pygame.mixer.music.get_busy():
-            try:
-                pygame.mixer.music.load(path)
-                pygame.mixer.music.play()
-            except KeyboardInterrupt:
-                logging.warning("Ctrl+C detected")
-                return
 def lineNotify(token, msg):
     url = "https://notify-api.line.me/api/notify"
     headers = {
@@ -269,10 +262,6 @@ if __name__ == "__main__":
         if(Myconfig["linyNotifyOn"]):
             logging.info("[Line] notifying...")
             lineNotify(Myconfig["lineNotifyToken"], "{0} zuvio 點名中!!!".format(courseName))
-
-        if(Myconfig["musicOn"] and not(isLoop)):
-            logging.info("[alarm] Playing...")
-            PlayMusic(Myconfig["music"])
         
         if(isLoop):
             logging.info("Wait for {} sec to start next loop".format(Myconfig["waitSecAfterSuccess"]))

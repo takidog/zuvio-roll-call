@@ -8,7 +8,7 @@
     "lng": 120.650394,
     "waitSec": 10,
     "Fullmode": 1,
-    "music": "alarm.mp3",
-    "musicOn": 1,
-    "linyNotifyOn":1
+    "linyNotifyOn":1,
+    "loop":1,
+    "waitSecAfterSuccess":60
 }

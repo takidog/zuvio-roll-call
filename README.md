@@ -17,3 +17,9 @@ download release or `python zuvio.py`
 注意，開啟這個選項後撥放音樂功能會自動關閉。
 
 `waitSecAfterSuccess 可以設定成功點名後間隔多久再次檢查有無點名
+
+## Docker usage
+
+```shell
+docker run --env USER=your_username --env PASSWD=your_password --env LINE_NOTIFY_TOKEN=token zuvio-auto
+```
