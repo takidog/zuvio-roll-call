@@ -230,7 +230,7 @@ class zuvio:
 
         logging.debug(self.course_list)
         while True:
-            logging.info("check roolcall")
+            logging.info("check rollcall")
             for course in self.course_list:
                 rollcall_status = self.check_rollcall_status(course_id=course['course_id'])
                 if isinstance(rollcall_status, dict):
@@ -260,12 +260,20 @@ if __name__ == "__main__":
         'lng': Myconfig["lng"]
     }
     
-    courseName = zuvio_user.rollcall_run_forever(check_sleep_sec=Myconfig["waitSec"])
-    
-    if(Myconfig["linyNotifyOn"]):
-        logging.info("[Line] notifying...")
-        lineNotify(Myconfig["lineNotifyToken"], "{0} zuvio 點名中!!!".format(courseName))
+    isLoop = True
+    while(isLoop):
+        isLoop = Myconfig["loop"] #是否循環
 
-    if(Myconfig["musicOn"]):
-        logging.info("[alarm] Playing...")
-        PlayMusic(Myconfig["music"])
+        courseName = zuvio_user.rollcall_run_forever(check_sleep_sec=Myconfig["waitSec"])
+        
+        if(Myconfig["linyNotifyOn"]):
+            logging.info("[Line] notifying...")
+            lineNotify(Myconfig["lineNotifyToken"], "{0} zuvio 點名中!!!".format(courseName))
+
+        if(Myconfig["musicOn"] and not(isLoop)):
+            logging.info("[alarm] Playing...")
+            PlayMusic(Myconfig["music"])
+        
+        if(isLoop):
+            logging.info("Wait for {} sec to start next loop".format(Myconfig["waitSecAfterSuccess"]))
+            time.sleep(Myconfig["waitSecAfterSuccess"])
